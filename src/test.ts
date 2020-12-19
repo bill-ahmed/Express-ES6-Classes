@@ -1,13 +1,14 @@
 export default class Test {
-    function_1() {
-        return 'fun_1!'
+    route_1(req: any, res: any, next: () => {}) {
+        return `Got parameters: ${req}, ${res}, ${next}.`
     }
 
-    function_2() {
+    route_2(req: any, res: any, next: () => {}) {
+        this.helper_function();
         return 2
     }
 
-    function_3(req: any, res: any, next: () => {}) {
-        return `Got parameters: ${req}, ${res}, ${next}.`
+    helper_function() {
+        console.log("Called helper!")
     }
 }

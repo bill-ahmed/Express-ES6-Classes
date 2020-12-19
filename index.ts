@@ -1,2 +1,10 @@
 import TestClass from './src/test';
-console.log("Got class", TestClass)
+
+function main() {
+    let start = new Date();
+    let instance = new TestClass();
+    console.log("Got instance", instance)
+    
+}
+
+main();
