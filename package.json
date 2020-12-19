@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "ts-node-dev --respawn --transpile-only index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf build && tsc"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/bill-ahmed/ES6-Express-Classes#readme",
   "dependencies": {
+    "reflect-metadata": "^0.1.13",
     "ts-node": "^9.1.1"
   },
   "devDependencies": {
