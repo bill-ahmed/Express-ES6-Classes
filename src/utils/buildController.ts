@@ -29,13 +29,12 @@ export default function buildController(klass: any) {
             let routeTypes = meta.type          ?? 'get';
             let middleware = meta.middleware    ?? []
 
-            console.log({ uriPath })
-
             /** User can provide multiple route types */
             if(!Array.isArray(routeTypes)) routeTypes = [routeTypes];
 
             /** Scope the method call to the instance, so helper functions/properties can be used */
             routeTypes.forEach(routeType => {
+                console.log(`[${routeType.toUpperCase()}]\t ${uriPath}`)
                 router[routeType].call(router, uriPath, ...middleware, (...args) => methodCall.call(instance, ...args))
             })
             
