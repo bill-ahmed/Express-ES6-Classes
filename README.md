@@ -15,7 +15,7 @@ class DashboardController {
      */
     @route({ index: true })
     async index(req: Request, res: Response) {
-        res.status(200).send(`Welcome to the home page!`);
+        res.status(200).send(`Welcome to the dashboard!`);
     }
 
     /** The function name is taken to be the endpoint!
@@ -31,7 +31,7 @@ class DashboardController {
         ])
     }
 
-    /** All method NOT marked as @route() are ignored. */
+    /** All method NOT marked as @route() are ignored, but are still avilable in each route. */
     async doSomeStuff() { ... }
 }
 
@@ -61,7 +61,7 @@ async updateData(req: Request, res: Response) { ... }
 
 ### Define middleware for all routes:
 ```typescript
-@useMiddleware(Logger)
+@useMiddleware(Logger)          /** Pass in array for multiple */
 class DashboardController {
     static PATH = '/dashboard'
 
