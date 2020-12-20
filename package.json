@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/bill-ahmed/ES6-Express-Classes#readme",
   "dependencies": {
+    "@types/express": "^4.17.9",
+    "express": "^4.17.1",
     "reflect-metadata": "^0.1.13",
     "ts-node": "^9.1.1"
   },
