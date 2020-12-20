@@ -1,14 +1,14 @@
 import { Router } from "express";
 import { RouteKeyRoot } from "../constants";
-import { RouteOptions } from "../types";
+import { BuildControllerOptions, RouteOptions } from "../types";
 
 /** 
  * Given a controller class, construct an express router that represents it.
  * @param klass Must implement BaseController!
  */
-export default function buildController(klass: any): Router {
+export default function buildController(klass: any, options?: BuildControllerOptions): Router {
     let instance = new klass();
-    let router = Router();
+    let router = options?.router ?? Router();
     
     /** This middleware runs BEFORE all route middleware!
      * Enfore array type.
@@ -16,7 +16,7 @@ export default function buildController(klass: any): Router {
     let classLevelMiddleware = Reflect.getMetadata(`${RouteKeyRoot}.${klass.name}`, klass) || []
     classLevelMiddleware = Array.isArray(classLevelMiddleware) ? classLevelMiddleware : [classLevelMiddleware]
 
-    let basePath = klass.PATH || ''
+    let basePath = options?.path ?? klass.PATH ?? ''
 
     for(const property in instance) {
         let meta = Reflect.getMetadata(`${RouteKeyRoot}.${property}`, instance, property) as RouteOptions

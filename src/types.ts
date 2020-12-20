@@ -1,9 +1,9 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 
 export type RouterMethod = 'all' | 'get' | 'put' | 'post' | 'patch' | 'delete' | 'use'
 export type MiddlewareSignature = (req?: Request, res?: Response, nextFunction?: NextFunction) => any
 
-export interface RouteOptions {
+export type RouteOptions = {
     /** List of middleware to run for this route. */
     middleware?: MiddlewareSignature | MiddlewareSignature[]
 
@@ -19,4 +19,12 @@ export interface RouteOptions {
 
     /** Whether this should be treated as the index route for controller path */
     index?: boolean
+}
+
+export type BuildControllerOptions = {
+    /** To override PATH defined in the controller. */
+    path?: string,
+
+    /** If you want to specify your own Express Router. */
+    router?: Router
 }
