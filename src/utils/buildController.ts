@@ -30,7 +30,14 @@ export default function buildController(klass: any, options?: BuildControllerOpt
             //
             let new_instance = new klass();
 
-            let uriPath = `${basePath}/${meta.index ? '' : property}`;  // If index path, end with '/'
+            let uriPath;
+            let routePath = meta.index ? '' : meta.name ?? property;
+
+            // Clean out leading / character
+            if(routePath.startsWith('/')) routePath = routePath.substr(1);
+
+            uriPath = `${basePath}/${routePath}`;
+
             let methodCall = new_instance[property] as Function;
 
             let routeTypes = meta.type          || 'get';

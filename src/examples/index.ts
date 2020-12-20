@@ -1,4 +1,5 @@
 import express from "express";
+import AdminController from "./AdminController";
 import BasicController from "./BasicController";
 import ClassLevelMiddleware from "./ClassLevelMiddleware";
 import EnforcedType from "./EnforcedTypeController";
@@ -15,6 +16,8 @@ function main() {
     app.use(ClassLevelMiddleware);
     
     app.use(MultipleRouteTypes);
+
+    app.use('/admin', AdminController);
 
     app.listen(3000, () => {
         console.info('App listening!')

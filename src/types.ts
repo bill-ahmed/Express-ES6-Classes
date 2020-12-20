@@ -5,7 +5,7 @@ export type MiddlewareSignature = (req?: Request, res?: Response, nextFunction?:
 
 export type RouteOptions = {
     /** List of middleware to run for this route. */
-    middleware?: MiddlewareSignature | MiddlewareSignature[]
+    middleware?: MiddlewareSignature | MiddlewareSignature[],
 
     /** The HTTP method, e.g. `get`, `post`, `delete`, `['get', 'post']` etc.
      * For a full list: 
@@ -15,7 +15,13 @@ export type RouteOptions = {
      * 
      * If not defined, will default to `get`.
      */
-    type?: RouterMethod | RouterMethod[]
+    type?: RouterMethod | RouterMethod[],
+
+    /** Override the name of this route. By default the function name is used.
+     * @example ```@route({ name: 'list_all_users' })```
+     * @example ```@route({ name: '/nested/list_all_users' })```
+     */
+    name?: string,
 
     /** Whether this should be treated as the index route for controller path */
     index?: boolean

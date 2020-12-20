@@ -3,7 +3,6 @@ import { BaseController } from '../BaseController';
 import { route } from '../decorators';
 import buildController from '../utils/buildController';
 
-
 class BasicController extends BaseController {
     static PATH = '/basic'
 
