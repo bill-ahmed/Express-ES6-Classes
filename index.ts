@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import express from "express";
 
-import buildController from './src/buildController';
-import { MiddlewareKeyRoot } from './src/constants';
-import TestClass from './src/test';
+import buildController from './src/utils/buildController';
+import { RouteKeyRoot } from './src/constants';
+import DashboardController from './src/example';
 
 function main() {
 
@@ -18,11 +18,10 @@ function main() {
      * 
      */
     var app = express();
-    let router = buildController(TestClass)
-    app.use(router);
+    app.use(DashboardController);
 
     app.listen(3000, () => {
-        console.warn('App listening!')
+        console.info('App listening!')
     })
 }
 

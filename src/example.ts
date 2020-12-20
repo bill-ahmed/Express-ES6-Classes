@@ -1,21 +1,10 @@
 import { Request, Response } from 'express';
-import 'reflect-metadata';
 import { BaseController } from './BaseController';
-import { MiddlewareKeyRoot } from './constants';
+import { route } from './decorators';
+import buildController from './utils/buildController';
 
 
-const route = (options?: { middleware?: any[] }) => {
-    return function(target: any /** Object */, propertyKey: string, descriptor: PropertyDescriptor) {
-        Reflect.defineMetadata(MiddlewareKeyRoot + propertyKey, {options: options ?? {} }, target, propertyKey);
-        return descriptor;
-}}
-
-const buildController = (target: any): any => {
-    return class extends target {
-    }
-}
-
-class Test implements BaseController {
+class DashboardController implements BaseController {
     PATH = '/dashboard'
 
     @route({middleware: [(req: Request, res: Response, n) => { res.locals.temp = [{hello: 1}];n() }, (req: Request, res: Response, n) => { res.locals.temp.push({hello: 2});n() }]})
@@ -25,11 +14,12 @@ class Test implements BaseController {
 
     @route({ middleware: [(req, res, n) => {n()}] })
     async route_2(req: Request, res: Response, n) {
-        await this.helper_function();
+        await this.sleep();
         res.status(200).send('From route_2!')
     }
 
-    helper_function() {
+    /** Sleep for 1 second */
+    sleep() {
         return new Promise((res, rej) => {
             setTimeout(() => {console.log('Finished waiting for 1 second!'); res(true);}, 1000)
         })    
@@ -37,4 +27,4 @@ class Test implements BaseController {
     }
 }
 
-export default buildController(Test)
+export default buildController(DashboardController)

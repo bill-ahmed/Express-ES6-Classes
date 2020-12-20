@@ -1,1 +1,1 @@
-export const MiddlewareKeyRoot = 'MiddlewareDecorator';
+export const RouteKeyRoot = '__ROUTE_OPTIONS';
