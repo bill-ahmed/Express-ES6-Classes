@@ -1,4 +1,7 @@
-export * as route from './route'
-export * as useMiddleware from './useMiddleware';
-export * as BaseController from './BaseController';
-export * as buildController from './utils/buildController'
+import { BaseController } from './BaseController';
+import { route } from './route';
+import { useMiddleware } from './useMiddleware';
+import buildController from './utils/buildController';
+
+export { buildController, route, useMiddleware, BaseController }
+export default buildController;
