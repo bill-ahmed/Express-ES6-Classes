@@ -1,12 +1,11 @@
-# Express-Classes
+# Express-ES6-Classes
 A package to help consolidate express routes. Inspired by Ruby on Rails :)
 
 ## Usage:
 
-Here's a basic example to get started. Note that `buildController(...)` returns a valid Express Router instance.
+Here's a basic example to get started. Note that `buildController(...)` returns a valid Express Router instance that be used directly with `app.use(...)`.
 
 ```typescript
-
 class DashboardController {
     static PATH = '/dashboard'
 
@@ -38,9 +37,9 @@ class DashboardController {
 export default buildController(DashboardController)
 ```
 
-The `@route()` decorator supports many more configurations. Take a look at the `src/examples` directory to get started with more complicated scenarios.
+The `@route()` decorator supports many more configurations. Take a look at the `src/examples` directory to get started with more scenarios.
 
-## More Usages
+## More Example Usages
 ### Define HTTP method types explicitly:
 ```typescript
 
