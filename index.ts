@@ -1,1 +1,0 @@
-import { buildController } from './src/index'
