@@ -1,6 +1,6 @@
 {
   "name": "eec",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Use ES6 Classes as expressjs routes.",
   "main": "lib/index.js",
   "scripts": {
