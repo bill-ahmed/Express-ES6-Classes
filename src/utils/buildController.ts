@@ -4,12 +4,19 @@ import { RouteOptions } from "../types";
 
 /** 
  * Given a controller class, construct an express router that represents it.
+ * @param klass Must implement BaseController!
  */
-export default function buildController(klass: any) {
+export default function buildController(klass: any): Router {
     let instance = new klass();
     let router = Router();
     
-    let basePath = instance.PATH || ''
+    /** This middleware runs BEFORE all route middleware!
+     * Enfore array type.
+     */
+    let classLevelMiddleware = Reflect.getMetadata(`${RouteKeyRoot}.${klass.name}`, klass) || []
+    classLevelMiddleware = Array.isArray(classLevelMiddleware) ? classLevelMiddleware : [classLevelMiddleware]
+
+    let basePath = klass.PATH || ''
 
     for(const property in instance) {
         let meta = Reflect.getMetadata(`${RouteKeyRoot}.${property}`, instance, property) as RouteOptions
@@ -26,16 +33,18 @@ export default function buildController(klass: any) {
             let uriPath = `${basePath}/${meta.index ? '' : property}`;  // If index path, end with '/'
             let methodCall = new_instance[property] as Function;
 
-            let routeTypes = meta.type          ?? 'get';
-            let middleware = meta.middleware    ?? []
+            let routeTypes = meta.type          || 'get';
+
+            // If middleware is single element, make it an array. If not provided, default to empty array.
+            let middleware = Array.isArray(meta.middleware) ? meta.middleware : meta.middleware ? [meta.middleware] : []
 
             /** User can provide multiple route types */
             if(!Array.isArray(routeTypes)) routeTypes = [routeTypes];
 
             /** Scope the method call to the instance, so helper functions/properties can be used */
             routeTypes.forEach(routeType => {
-                console.log(`[${routeType.toUpperCase()}]\t ${uriPath}`)
-                router[routeType].call(router, uriPath, ...middleware, (...args) => methodCall.call(instance, ...args))
+                console.log(`[${routeType.toUpperCase()}]\t ${uriPath}`, [ ...classLevelMiddleware, ...middleware])
+                router[routeType].call(router, uriPath, [ ...classLevelMiddleware, ...middleware], (...args) => methodCall.call(instance, ...args))
             })
             
         }

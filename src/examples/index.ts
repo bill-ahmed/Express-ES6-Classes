@@ -1,5 +1,6 @@
 import express from "express";
 import BasicController from "./BasicController";
+import ClassLevelMiddleware from "./ClassLevelMiddleware";
 import EnforcedType from "./EnforcedTypeController";
 import InlineMiddleware from "./InlineMiddlewareController";
 import MultipleRouteTypes from "./MultipleRouteTypes";
@@ -9,7 +10,10 @@ function main() {
 
     app.use(BasicController);
     app.use(EnforcedType);
+
     app.use(InlineMiddleware);
+    app.use(ClassLevelMiddleware);
+    
     app.use(MultipleRouteTypes);
 
     app.listen(3000, () => {

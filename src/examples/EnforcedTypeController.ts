@@ -4,8 +4,8 @@ import { route } from '../decorators';
 import buildController from '../utils/buildController';
 
 
-class EnforcedTypeController implements BaseController {
-    PATH = '/enforcedType'
+class EnforcedTypeController extends BaseController {
+    static PATH = '/enforcedType'
 
     @route({ type: 'post' })
     async route_1(req: Request, res: Response, n) {

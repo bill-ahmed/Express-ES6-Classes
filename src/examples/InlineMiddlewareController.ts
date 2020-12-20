@@ -4,8 +4,8 @@ import { route } from '../decorators';
 import buildController from '../utils/buildController';
 
 
-class InlineMiddlewareController implements BaseController {
-    PATH = '/inlineMiddleware'
+class InlineMiddlewareController extends BaseController {
+    static PATH = '/inlineMiddleware'
 
     @route({
         middleware: [

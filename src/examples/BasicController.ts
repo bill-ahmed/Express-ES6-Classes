@@ -4,8 +4,8 @@ import { route } from '../decorators';
 import buildController from '../utils/buildController';
 
 
-class BasicController implements BaseController {
-    PATH = '/basic'
+class BasicController extends BaseController {
+    static PATH = '/basic'
 
     @route({ index: true })
     async index(req: Request, res: Response, n) {

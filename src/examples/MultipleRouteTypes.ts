@@ -4,8 +4,8 @@ import { route } from '../decorators';
 import buildController from '../utils/buildController';
 
 
-class MultipleRouteTypesController implements BaseController {
-    PATH = '/multipleRouteTypes'
+class MultipleRouteTypesController extends BaseController {
+    static PATH = '/multipleRouteTypes'
 
     @route({ type: ['get', 'delete'] })
     async route_1(req: Request, res: Response, n) {

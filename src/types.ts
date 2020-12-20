@@ -5,7 +5,7 @@ export type MiddlewareSignature = (req?: Request, res?: Response, nextFunction?:
 
 export interface RouteOptions {
     /** List of middleware to run for this route. */
-    middleware?: MiddlewareSignature[]
+    middleware?: MiddlewareSignature | MiddlewareSignature[]
 
     /** The HTTP method, e.g. `get`, `post`, `delete`, `['get', 'post']` etc.
      * For a full list: 
