@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "outDir": "./build",
+    "module": "commonjs",
+    "outDir": "./lib",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowJs": true,
-    "sourceMap": true,
+    // "sourceMap": true,
     "strict": false,
     "noEmit": false,
     "experimentalDecorators": true,
@@ -15,6 +16,7 @@
     /* Advanced Options */
     "forceConsistentCasingInFileNames": true  /* Disallow inconsistently-cased references to the same file. */,
   },
+  "include": ["src"],
   "exclude": [
     "node_modules",
     "dist"
