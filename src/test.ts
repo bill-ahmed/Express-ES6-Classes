@@ -24,12 +24,16 @@ class Test implements BaseController {
     }
 
     @route({ middleware: [(req, res, n) => {n()}] })
-    route_2(req: Request, res: Response, n) {
+    async route_2(req: Request, res: Response, n) {
+        await this.helper_function();
         res.status(200).send('From route_2!')
     }
 
     helper_function() {
-        console.log("Called helper!")
+        return new Promise((res, rej) => {
+            setTimeout(() => {console.log('Finished waiting for 1 second!'); res(true);}, 1000)
+        })    
+        
     }
 }
 

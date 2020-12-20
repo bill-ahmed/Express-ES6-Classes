@@ -14,7 +14,6 @@ export default function buildController(klass: any) {
 
         // If this property is a route
         if(typeof meta !== 'undefined') {
-
             // Create new instance for this route
             let new_instance = new klass();
 
@@ -24,7 +23,7 @@ export default function buildController(klass: any) {
 
             console.log({ uriPath, middleware, routeCall })
 
-            router.use(uriPath, ...middleware, routeCall)
+            router.use(uriPath, ...middleware, (...args) => routeCall.call(instance, ...args))
             class_routes.push(new_instance);
         }
     }
