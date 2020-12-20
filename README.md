@@ -38,6 +38,14 @@ app.listen(3000, () => { console.log("App listening!") })
 
 The `@route()` decorator supports many more configurations. Take a look at the `src/examples` directory to get started with more scenarios.
 
+## Running Examples
+To run all the examples provided:
+1. Clone this repo
+2. `npm install`
+3. `npm start`
+
+A server will be listening at port 3000!
+
 ## More Example Usages
 
 ### Use helpers methods defined in the class
