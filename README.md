@@ -1,6 +1,9 @@
 # eec (Express-ES6-Classes)
 A package to help consolidate express routes. Inspired by Ruby on Rails :)
 
+## Install:
+```npm install eec```
+
 ## Usage:
 
 Here's a basic example to get started. Note that `buildController(...)` returns a valid Express Router instance that be used directly with `app.use(...)`.

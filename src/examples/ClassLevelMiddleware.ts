@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { BaseController } from '../BaseController';
-import { useMiddleware, route } from '../decorators';
+import { route } from '../route';
+import { useMiddleware } from '../useMiddleware';
 import buildController from '../utils/buildController';
 
 @useMiddleware((req, res, n) => { res.locals.count = 0; n() }) /** Can also be an array of middleware! */

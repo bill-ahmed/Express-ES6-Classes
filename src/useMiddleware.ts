@@ -1,14 +1,6 @@
 import 'reflect-metadata';
 import { RouteKeyRoot } from "./constants";
-import { MiddlewareSignature, RouteOptions } from "./types";
-
-export const route = (options?: RouteOptions) => {
-    return function(target: Object /** Object */, propertyKey: string, descriptor: PropertyDescriptor) {
-        Reflect.defineMetadata(`${RouteKeyRoot}.${propertyKey}`, options ?? {}, target, propertyKey);
-
-        return descriptor;
-    }
-}
+import { MiddlewareSignature } from "./types";
 
 /** Assign middleware to all routes within this class.
  * @param middleware The middleware to assign.

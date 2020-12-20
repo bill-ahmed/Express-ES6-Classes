@@ -1,5 +1,4 @@
-export * from './BaseController';
-export * from './decorators'
-export * from './types'
-
-export * from './utils/buildController'
+export * as route from './route'
+export * as useMiddleware from './useMiddleware';
+export * as BaseController from './BaseController';
+export * as buildController from './utils/buildController'

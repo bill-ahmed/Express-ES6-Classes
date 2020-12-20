@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { BaseController } from '../BaseController';
-import { route } from '../decorators';
+import { route } from '../route';
 import buildController from '../utils/buildController';
 
 
