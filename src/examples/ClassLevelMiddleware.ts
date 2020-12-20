@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
+import { BaseController } from '../BaseController';
 import { useMiddleware, route } from '../decorators';
 import buildController from '../utils/buildController';
 
 @useMiddleware((req, res, n) => { res.locals.count = 0; n() }) /** Can also be an array of middleware! */
-class ClassLevelMiddlewareController {
+class ClassLevelMiddlewareController extends BaseController {
     static PATH = '/classLevelMiddleware'
 
     @route({ middleware: (req, res, n) => { res.locals.count++; n(); } }) /** Count was provided by class-level middleware since it always runs first! */

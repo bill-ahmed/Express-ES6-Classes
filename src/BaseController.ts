@@ -1,4 +1,4 @@
-export class BaseController {
+export abstract class BaseController {
     /** The root path for the controller.
      * If not specified, will default to the root '/'.
      */
