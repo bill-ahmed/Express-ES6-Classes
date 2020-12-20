@@ -4,7 +4,7 @@ import { route } from '../decorators';
 import buildController from '../utils/buildController';
 
 class AdminController extends BaseController {
-    static PATH = '/users'
+    static PATH = '/'
 
     @route({ name: 'nested/list_all_users' })
     async listOfAllUsers(req: Request, res: Response, n) {

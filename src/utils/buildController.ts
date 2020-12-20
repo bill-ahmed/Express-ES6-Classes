@@ -17,6 +17,9 @@ export default function buildController(klass: any, options?: BuildControllerOpt
     classLevelMiddleware = Array.isArray(classLevelMiddleware) ? classLevelMiddleware : [classLevelMiddleware]
 
     let basePath = options?.path ?? klass.PATH ?? ''
+    
+    // Special case where root is given :(
+    if(basePath === '/') basePath = '';
 
     for(const property in instance) {
         let meta = Reflect.getMetadata(`${RouteKeyRoot}.${property}`, instance, property) as RouteOptions
@@ -50,6 +53,9 @@ export default function buildController(klass: any, options?: BuildControllerOpt
 
             /** Scope the method call to the instance, so helper functions/properties can be used */
             routeTypes.forEach(routeType => {
+
+                console.log(`[${routeType}]\t ${uriPath}`)
+
                 router[routeType].call(router, uriPath, [ ...classLevelMiddleware, ...middleware], (...args) => methodCall.call(instance, ...args))
             })
             
