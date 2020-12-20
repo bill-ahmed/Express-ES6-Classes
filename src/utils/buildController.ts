@@ -43,7 +43,6 @@ export default function buildController(klass: any): Router {
 
             /** Scope the method call to the instance, so helper functions/properties can be used */
             routeTypes.forEach(routeType => {
-                console.log(`[${routeType.toUpperCase()}]\t ${uriPath}`, [ ...classLevelMiddleware, ...middleware])
                 router[routeType].call(router, uriPath, [ ...classLevelMiddleware, ...middleware], (...args) => methodCall.call(instance, ...args))
             })
             

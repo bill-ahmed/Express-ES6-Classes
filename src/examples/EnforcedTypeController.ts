@@ -18,7 +18,6 @@ class EnforcedTypeController extends BaseController {
         return new Promise((res, rej) => {
             setTimeout(
                 () => {
-                    console.log('Finished waiting for 1 second!'); 
                     res(1);
                 }, 500)
         })    
