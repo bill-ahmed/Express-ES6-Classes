@@ -16,4 +16,7 @@ export interface RouteOptions {
      * If not defined, will default to `get`.
      */
     type?: RouterMethod
+
+    /** Whether this should be treated as the index route for controller path */
+    index?: boolean
 }
