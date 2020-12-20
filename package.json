@@ -1,8 +1,8 @@
 {
-  "name": "es6-express-classes",
+  "name": "eec",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.ts",
   "scripts": {
     "start": "npm run dev",
     "dev": "ts-node-dev --respawn --transpile-only src/examples/index.ts",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bill-ahmed/ES6-Express-Classes.git"
+    "url": "git+https://github.com/bill-ahmed/eec.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bill-ahmed/ES6-Express-Classes/issues"
+    "url": "https://github.com/bill-ahmed/eec/issues"
   },
-  "homepage": "https://github.com/bill-ahmed/ES6-Express-Classes#readme",
+  "homepage": "https://github.com/bill-ahmed/eec#readme",
   "dependencies": {
     "express": "^4.17.1",
     "reflect-metadata": "^0.1.13",

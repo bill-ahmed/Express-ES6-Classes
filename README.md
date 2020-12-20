@@ -1,4 +1,4 @@
-# Express-ES6-Classes
+# eec (Express-ES6-Classes)
 A package to help consolidate express routes. Inspired by Ruby on Rails :)
 
 ## Usage:
