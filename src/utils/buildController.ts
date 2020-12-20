@@ -4,7 +4,7 @@ import { BuildControllerOptions, RouteOptions } from "../types";
 
 /** 
  * Given a controller class, construct an express router that represents it.
- * @param klass Must implement BaseController!
+ * @param klass Must extend BaseController!
  */
 export default function buildController(klass: any, options?: BuildControllerOptions): Router {
     let instance = new klass();
