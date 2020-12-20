@@ -7,7 +7,7 @@ export interface RouteOptions {
     /** List of middleware to run for this route. */
     middleware?: MiddlewareSignature[]
 
-    /** The HTTP method, e.g. `get`, `post`, `delete`, etc.
+    /** The HTTP method, e.g. `get`, `post`, `delete`, `['get', 'post']` etc.
      * For a full list: 
      *  * https://expressjs.com/en/api.html#router.METHOD
      *  
@@ -15,7 +15,7 @@ export interface RouteOptions {
      * 
      * If not defined, will default to `get`.
      */
-    type?: RouterMethod
+    type?: RouterMethod | RouterMethod[]
 
     /** Whether this should be treated as the index route for controller path */
     index?: boolean

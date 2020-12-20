@@ -26,13 +26,19 @@ export default function buildController(klass: any) {
             let uriPath = `${basePath}/${meta.index ? '' : property}`;  // If index path, end with '/'
             let methodCall = new_instance[property] as Function;
 
-            let routeType = meta.type           ?? 'get';
+            let routeTypes = meta.type          ?? 'get';
             let middleware = meta.middleware    ?? []
 
             console.log({ uriPath })
 
+            /** User can provide multiple route types */
+            if(!Array.isArray(routeTypes)) routeTypes = [routeTypes];
+
             /** Scope the method call to the instance, so helper functions/properties can be used */
-            router[routeType].call(router, uriPath, ...middleware, (...args) => methodCall.call(instance, ...args))
+            routeTypes.forEach(routeType => {
+                router[routeType].call(router, uriPath, ...middleware, (...args) => methodCall.call(instance, ...args))
+            })
+            
         }
     }
 

@@ -9,7 +9,7 @@ class BasicController implements BaseController {
 
     @route({ index: true })
     async index(req: Request, res: Response, n) {
-        res.status(200).send(`[${this.constructor.name}] index is working!`);
+        res.status(200).send(`[${this.constructor.name}] This is an example of a root (index) route.`);
     }
 }
 

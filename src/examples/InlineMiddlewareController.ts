@@ -14,7 +14,7 @@ class InlineMiddlewareController implements BaseController {
         ]
     })
     async route_1(req: Request, res: Response, n) {
-        res.status(200).send(`[${this.constructor.name}] route_1 is working!<br/><br/> Data: ${JSON.stringify(res.locals.temp)}`);
+        res.status(200).send(`[${this.constructor.name}] A route with some middleware, here's the data: ${JSON.stringify(res.locals.temp)}`);
     }
 }
 
