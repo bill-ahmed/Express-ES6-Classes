@@ -1,46 +1,31 @@
+import { Request, Response } from 'express';
 import 'reflect-metadata';
+import { BaseController } from './BaseController';
+import { MiddlewareKeyRoot } from './constants';
 
-const middlewareKey = 'MiddlewareDecorator'
 
-const middleware = (middlewareToAdd?: any[]) => {
+const route = (options?: { middleware?: any[] }) => {
     return function(target: any /** Object */, propertyKey: string, descriptor: PropertyDescriptor) {
-        Reflect.defineMetadata(middlewareKey, true, target, propertyKey);
-        
-        let originalMethod = descriptor.value;
-
-        descriptor.value = function(...args) {
-            /** Set appropriate middleware the first time around! */
-            if(!this.__APPLIED_MIDDLEWARE) {
-                this.__MIDDLEWARE = middlewareToAdd;
-                this.__APPLIED_MIDDLEWARE = true;
-
-                return;
-            }
-
-            originalMethod.apply(this, args);
-        }
+        Reflect.defineMetadata(MiddlewareKeyRoot + propertyKey, {options: options ?? {} }, target, propertyKey);
         return descriptor;
 }}
 
 const buildController = (target: any): any => {
     return class extends target {
-        /** DO NOT MODIFY! */
-        __IS_CONTROLLER = true
-        __APPLIED_MIDDLEWARE = false;
-
-        __MIDDLEWARE = [];
     }
 }
 
-class Test {
-    @middleware(['middleware_1', 'middleware_2'])
-    route_1(req: any, res: any, next: () => {}) {
-        return `Got parameters: ${req}, ${res}, ${next}.`
+class Test implements BaseController {
+    PATH = '/dashboard'
+
+    @route({middleware: [(req: Request, res: Response, n) => { res.locals.temp = [{hello: 1}];n() }, (req: Request, res: Response, n) => { res.locals.temp.push({hello: 2});n() }]})
+    route_1(req: Request, res: Response, n) {
+        res.status(200).send("From route_1!");
     }
 
-    route_2(req: any, res: any, next: () => {}) {
-        this.helper_function();
-        return 2
+    @route({ middleware: [(req, res, n) => {n()}] })
+    route_2(req: Request, res: Response, n) {
+        res.status(200).send('From route_2!')
     }
 
     helper_function() {
