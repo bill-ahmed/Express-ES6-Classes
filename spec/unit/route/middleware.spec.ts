@@ -9,14 +9,12 @@ import buildController from '../../../src/utils/buildController';
 const app = express();
 
 test('creates route with no middleware', async t => {
-    class NoMiddleware {
-        static PATH = '/route1';
-    
+    class NoMiddleware {    
         @route()
         async index(req, res) { res.json({ num: -1 }); }
     }
 
-    let router = buildController(NoMiddleware);
+    let router = buildController(NoMiddleware, { path: '/route1' });
     app.use(router);
 
     let resp = await request(app).get('/route1/index').expect(200, { num: -1 })
@@ -25,14 +23,12 @@ test('creates route with no middleware', async t => {
 })
 
 test('creates route with one middleware', async t => {
-    class SingleMiddleware {
-        static PATH = '/route2';
-    
+    class SingleMiddleware {    
         @route({ middleware: (req, res, n) => { res.locals.num = 0; n(); } })
         async index(req, res) { res.json({ num: res.locals.num }); }
     }
 
-    let router = buildController(SingleMiddleware);
+    let router = buildController(SingleMiddleware, { path: '/route2' });
     app.use(router);
 
     let resp = await request(app).get('/route2/index').expect({ num: 0 })
@@ -40,9 +36,7 @@ test('creates route with one middleware', async t => {
 })
 
 test('creates route with multiple middleware', async t => {
-    class MultipleMiddleware {
-        static PATH = '/route3';
-    
+    class MultipleMiddleware {    
         @route({ 
             middleware: [
                 (req, res, n) => { res.locals.num = 0; n(); },
@@ -52,7 +46,7 @@ test('creates route with multiple middleware', async t => {
         async index(req, res) { res.json({ num: res.locals.num }); }
     }
 
-    let router = buildController(MultipleMiddleware);
+    let router = buildController(MultipleMiddleware, { path: '/route3' });
     app.use(router);
 
     let resp = await request(app).get('/route3/index').expect({ num: 1 })
@@ -60,9 +54,7 @@ test('creates route with multiple middleware', async t => {
 })
 
 test('creates multiple routes with different middleware', async t => {
-    class RoutesWithDifferentMiddleware {
-        static PATH = '/route4';
-    
+    class RoutesWithDifferentMiddleware {    
         @route({ 
             middleware: [
                 (req, res, n) => { res.locals.num = 2; n(); },
@@ -80,7 +72,7 @@ test('creates multiple routes with different middleware', async t => {
         async another(req, res) { res.json({ num: res.locals.num }); }
     }
 
-    let router = buildController(RoutesWithDifferentMiddleware);
+    let router = buildController(RoutesWithDifferentMiddleware, { path: '/route4' });
     app.use(router);
 
     let resp_1 = await request(app).get('/route4/index').expect({ num: 3 })
