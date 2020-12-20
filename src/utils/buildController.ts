@@ -4,7 +4,7 @@ import { BuildControllerOptions, RouteOptions } from "../types";
 
 /** 
  * Given a controller class, construct an express router that represents it.
- * @param klass Must implement BaseController!
+ * @param klass Must extend BaseController!
  */
 export default function buildController(klass: any, options?: BuildControllerOptions): Router {
     let instance = new klass();
@@ -54,7 +54,7 @@ export default function buildController(klass: any, options?: BuildControllerOpt
             /** Scope the method call to the instance, so helper functions/properties can be used */
             routeTypes.forEach(routeType => {
 
-                console.log(`[${routeType}]\t ${uriPath}`)
+                //console.log(`[${routeType}]\t ${uriPath}`)
 
                 router[routeType].call(router, uriPath, [ ...classLevelMiddleware, ...middleware], (...args) => methodCall.call(instance, ...args))
             })
