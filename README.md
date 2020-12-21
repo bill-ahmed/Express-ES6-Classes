@@ -1,5 +1,5 @@
 # eec (express-es6-classes)
-A package to help consolidate express routes. Inspired by Ruby on Rails :)
+Define ExpressJS routes as Typescript classes using decorators. Inspired by Ruby on Rails :)
 
 ## Install:
 ```
@@ -45,6 +45,12 @@ To run all the examples provided:
 3. `npm start`
 
 A server will be listening at port 3000!
+
+## Running tests
+```
+npm install
+npm test
+```
 
 ## More Example Usages
 
