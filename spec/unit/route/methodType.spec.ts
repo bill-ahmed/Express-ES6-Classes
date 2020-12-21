@@ -3,7 +3,7 @@ import test from 'ava';
 import request from 'supertest';
 import express from 'express';
 
-import { route } from '../../../src';
+import { all, get, post, put, route, use } from '../../../src';
 import buildController from '../../../src/utils/buildController';
 
 /** Test HTTP method types for routes */
@@ -27,6 +27,25 @@ class PutAndPatchAndDelete {
 
 	@route({ type: ['put', 'patch', 'delete'] })
 	async index(req, res) { res.sendStatus(200); }
+}
+
+class Aliases {
+	static PATH = '/route_4'
+
+	@get()
+	async get(req, res) { res.sendStatus(200); }
+
+	@put()
+	async put(req, res) { res.sendStatus(200); }
+
+	@post()
+	async post(req, res) { res.sendStatus(200); }
+
+	@all()
+	async all(req, res) { res.sendStatus(200); }
+
+	@use()
+	async use(req, res) { res.sendStatus(200); }
 }
 
 const app = express();
@@ -84,3 +103,30 @@ test('creates routes for PUT, PATCH and DELETE', async t => {
 	t.is(r_3.ok, true);
 	t.is(r_4.ok, true);
 });
+
+test('aliases work correctly', async t => {
+	let router = buildController(Aliases);
+	app.use(router);
+
+	// Validate all of the aliased routes
+	[
+		await request(app).get('/route_4/get').expect(200),
+		await request(app).put('/route_4/put').expect(200),
+		await request(app).post('/route_4/post').expect(200),
+
+		// 'all' should respond to any method type
+		await request(app).get('/route_4/all').expect(200),
+		await request(app).put('/route_4/all').expect(200),
+		await request(app).post('/route_4/all').expect(200),
+		await request(app).patch('/route_4/all').expect(200),
+		await request(app).delete('/route_4/all').expect(200),
+
+		// 'use' should respond to any method type
+		await request(app).get('/route_4/use').expect(200),
+		await request(app).put('/route_4/use').expect(200),
+		await request(app).post('/route_4/use').expect(200),
+		await request(app).patch('/route_4/use').expect(200),
+		await request(app).delete('/route_4/use').expect(200),
+
+	].forEach(req => { t.is(req.ok, true) })
+})
