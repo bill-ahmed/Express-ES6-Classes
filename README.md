@@ -78,17 +78,21 @@ class DashboardController {
 
 // Don't want a GET route? Specify a different one!
 @route({ type: 'post' })
-async updateUsers(req: Request, res: Response) { ... }
+async updateUsers(req, res) { ... }
+
+// Or use one of the several aliases
+@post()
+async updateUsers(req, res) { ... }
 
 // Respond to multiple HTTP methods
 @route({ type: ['post', 'put', 'delete'] })
-async updateRecords(req: Request, res: Response) { ... }
+async updateRecords(req, res) { ... }
 ```
 
 ### Multiple middleware per route:
 ```typescript
 @route({ middleware: [Logger, Authentication] })
-async updateData(req: Request, res: Response) { ... }
+async updateData(req, res) { ... }
 ```
 
 ### Define middleware for all routes:
@@ -99,7 +103,7 @@ class DashboardController {
 
     // This middleware will run AFTER the Logger!
     @route({ middleware: Authentication })
-    async users(req: Request, res: Response) { ... }
+    async users(req, res) { ... }
 }
 
 export default buildController(DashboardController)
