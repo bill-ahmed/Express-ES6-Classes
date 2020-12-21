@@ -1,7 +1,7 @@
 {
   "name": "eec",
-  "version": "1.0.5",
-  "description": "Use ES6 Classes as expressjs routes.",
+  "version": "1.0.6",
+  "description": "Define ExpressJS routes as Typescript classes.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
