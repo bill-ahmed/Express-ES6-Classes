@@ -13,7 +13,7 @@ This package makes use of decorators and reflect-metadata. so you will also need
 
 ## Usage:
 
-Here's a basic example to get started. Note that `buildController(...)` returns a valid Express Router instance that be used directly with `app.use(...)`.
+Here's a basic example to get started. Note that `buildController(...)` returns a valid Express Router instance that can be used directly with `app.use(...)`.
 
 ```typescript
 import express from 'express';
@@ -55,7 +55,7 @@ npm test
 
 ## More Example Usages
 
-### Use helpers methods defined in the class
+### Use helper methods defined in the class
 ```typescript
 
 class DashboardController {
