@@ -12,7 +12,7 @@ class BasicController extends BaseController {
     }
 
     helper1() {
-        return 'helper works!'
+        return `Helper works! ${new Date()}`
     }
 }
 

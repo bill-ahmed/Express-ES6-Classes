@@ -8,12 +8,19 @@ export function route(options?: RouteOptions) {
     return function(target: Object /** Object */, propertyKey: string, descriptor: PropertyDescriptor) {
         const originalMethod = descriptor.value;
 
+        // Keep track of instance-specific methods
+        // Static methods are already taken care of by this design
+        var ctxMethods;
+
         // Make sure this is used on a function!
         if(typeof originalMethod !== 'function') { return; }
-
         Reflect.defineMetadata(`${RouteKeyRoot}.${propertyKey}`, options ?? {}, target, propertyKey);
 
         descriptor.value = function(req: Request, res: Response, next: NextFunction) {
+            // Populate instance methods the first time if we don't already have them
+            // Closure-magic
+            if(!ctxMethods) ctxMethods = getMethods(this);
+
             /** 
              * Bring these into scope for easier access.
              * This will also provide helper methods in the class access to this!
@@ -28,7 +35,7 @@ export function route(options?: RouteOptions) {
                 query: req.query,
 
                 /** Add remaining method calls of instance so it's available in the scope */
-                ...getMethods(this)
+                ...ctxMethods
             }
 
             originalMethod.bind(ctx).apply(this, [req, res, next])
