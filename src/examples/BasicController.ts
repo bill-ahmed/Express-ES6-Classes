@@ -7,8 +7,8 @@ class BasicController extends BaseController {
     static PATH = '/basic'
 
     @route({ index: true })
-    async index(req: Request, res: Response, n) {
-        res.status(200).send(`[${this.constructor.name}] This is an example of a root (index) route.`);
+    async index() {
+        this.response.status(200).send(`[${this.constructor.name}] This is an example of a root (index) route.`);
     }
 }
 
