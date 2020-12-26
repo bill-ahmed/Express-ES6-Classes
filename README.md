@@ -1,6 +1,6 @@
 # eec (express-es6-classes) <br/>![Test Suite](https://github.com/bill-ahmed/eec/workflows/Test%20Suite/badge.svg?branch=main)
 
-Define ExpressJS routes as Typescript classes using decorators. Inspired by Ruby on Rails :)
+Define ExpressJS routes as Typescript classes using decorators. Inspired by the MVC pattern.
 
 ## Install:
 ```
