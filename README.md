@@ -109,3 +109,34 @@ class DashboardController {
 
 export default buildController(DashboardController)
 ```
+
+### Request/Response and other objects are also provided inside `this` context!
+```typescript
+class DashboardController {
+    static PATH = '/dashboard'
+
+    @get()
+    async users() {
+        let raw = this.query.myNum
+        let num = Number.parseInt(raw)
+
+        this.response.json({ result: num })
+
+        /** There are aliases provided for:
+         * 
+         * req --> this.request
+         * res --> this.response
+         * next --> this.next,
+         * 
+         * res.locals --> this.locals
+         * req.params --> this.params
+         * req.query --> this.query
+         * 
+         * These can be used in any number of 
+         * helper functions within the class!
+        */
+    }
+}
+
+export default buildController(DashboardController)
+```
