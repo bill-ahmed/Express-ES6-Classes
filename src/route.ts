@@ -1,12 +1,30 @@
 import 'reflect-metadata';
+import { NextFunction, Request, Response } from 'express';
 import { RouteKeyRoot } from "./constants";
 import { RouteOptions } from "./types";
 
 /** Define function as a route endpoint. */
 export const route = (options?: RouteOptions) => {
     return function(target: Object /** Object */, propertyKey: string, descriptor: PropertyDescriptor) {
+        const originalMethod = descriptor.value;
+
+        // Make sure this is used on a function!
+        if(typeof originalMethod !== 'function') { return; }
+
         Reflect.defineMetadata(`${RouteKeyRoot}.${propertyKey}`, options ?? {}, target, propertyKey);
 
+        descriptor.value = function(req: Request, res: Response, next: NextFunction) {
+            /** Bring into scope for easier access
+             * This will also provide other methods in the route access to this!
+             */
+            this.request = req;
+            this.response = res;
+            this.next = next;
+
+            this.params = req.params;
+
+            originalMethod.apply(this, [req, res, next])
+        }
         return descriptor;
     }
 }
