@@ -8,7 +8,11 @@ class BasicController extends BaseController {
 
     @route({ index: true })
     async index() {
-        this.response.status(200).send(`[${this.constructor.name}] This is an example of a root (index) route.`);
+        this.response.status(200).send(`[${this.constructor.name}] This is an example of a root (index) route. Helper message: ${this.helper1()}`);
+    }
+
+    helper1() {
+        return 'helper works!'
     }
 }
 

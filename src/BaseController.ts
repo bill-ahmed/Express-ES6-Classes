@@ -10,6 +10,8 @@ export abstract class BaseController {
     response: Response;
     next: NextFunction;
     params: any;
+
+    helpers: any;
     
     [x: string]: any
 }

@@ -4,7 +4,7 @@ import { RouteKeyRoot } from "./constants";
 import { RouteOptions } from "./types";
 
 /** Define function as a route endpoint. */
-export const route = (options?: RouteOptions) => {
+export function route(options?: RouteOptions) {
     return function(target: Object /** Object */, propertyKey: string, descriptor: PropertyDescriptor) {
         const originalMethod = descriptor.value;
 
@@ -14,16 +14,24 @@ export const route = (options?: RouteOptions) => {
         Reflect.defineMetadata(`${RouteKeyRoot}.${propertyKey}`, options ?? {}, target, propertyKey);
 
         descriptor.value = function(req: Request, res: Response, next: NextFunction) {
-            /** Bring into scope for easier access
-             * This will also provide other methods in the route access to this!
+            /** 
+             * Bring these into scope for easier access.
+             * This will also provide helper methods in the class access to this!
              */
-            this.request = req;
-            this.response = res;
-            this.next = next;
+            const ctx = {
+                request: req,
+                response: res,
+                next: next,
 
-            this.params = req.params;
+                locals: res.locals,
+                params: req.params,
+                query: req.query,
 
-            originalMethod.apply(this, [req, res, next])
+                /** Add remaining method calls of instance so it's available in the scope */
+                ...getMethods(this)
+            }
+
+            originalMethod.bind(ctx).apply(this, [req, res, next])
         }
         return descriptor;
     }
@@ -63,3 +71,16 @@ export const all = (options?: RouteOptions) => {
 export const use = (options?: RouteOptions) => {
     return route({ ...options, type: 'use' });
 }
+
+/** Get all functions defined in an object */
+function getMethods(object) {
+    let result = {};
+
+    for(const property in object) {
+        let prop = object[property]
+        if(typeof prop === 'function') {
+            result[property] = prop;
+        }
+    }
+    return result;
+} 

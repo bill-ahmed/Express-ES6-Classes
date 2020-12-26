@@ -8,7 +8,10 @@ class AdminController extends BaseController {
 
     @get({ name: 'nested/list_all_users' })
     async listOfAllUsers() {
-        this.response.status(200).send(`[${this.constructor.name}] Users page in admin route.`);
+        setTimeout(function() { 
+            this.response.status(200).send(`[${this.constructor.name}] Users page in admin route.`);
+         }.bind(this), 1000);
+        
     }
 
     @get({ name: '/deeply/nested/route/path' })
