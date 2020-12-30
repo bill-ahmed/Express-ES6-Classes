@@ -17,15 +17,25 @@ Here's a basic example to get started. Note that `buildController(...)` returns 
 
 ```typescript
 import express from 'express';
-import { route, buildController } from 'eec';
+import { route, buildController, BaseController } from 'eec';
 
-class DashboardController {
+class DashboardController extends BaseController {
     static PATH = '/dashboard'
 
-    // Responds to: /dashboard. `index` says to treat it like index of the PATH
-    @route({ index: true })
-    async index(req, res) {
-        res.status(200).send(`Welcome to the dashboard!`);
+    @route({ index: true })     // Responds to: /dashboard. `index` says to use as index route
+    async index() {
+        this.response.status(200).send(`Welcome to the dashboard!`);
+    }
+
+    @route()        // Responds to /dashboard/users
+    async users() {
+        // Also req.params & req.query
+        if(this.params.someParameter || this.query.anotherParameter) {
+            this.response.json({ name: 'John' });
+            return;
+        }
+
+        this.response.sendStatus(404)
     }
 }
 
