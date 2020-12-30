@@ -4,6 +4,13 @@
   "description": "Define ExpressJS routes as Typescript classes.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "keywords": [
+    "express",
+    "expressjs",
+    "MVC",
+    "controllers",
+    "es6 classes"
+  ],
   "scripts": {
     "start": "npm run dev",
     "dev": "ts-node-dev --respawn --transpile-only src/examples/index.ts",
