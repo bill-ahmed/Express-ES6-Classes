@@ -13,7 +13,7 @@ This package makes use of decorators and reflect-metadata. so you will also need
 
 ## Usage:
 
-Here's a basic example to get started. Note that `buildController(...)` returns a valid Express Router instance that be used directly with `app.use(...)`.
+Here's a basic example to get started. Note that `buildController(...)` returns a valid Express Router instance that can be used directly with `app.use(...)`.
 
 ```typescript
 import express from 'express';
@@ -55,7 +55,7 @@ npm test
 
 ## More Example Usages
 
-### Use helpers methods defined in the class
+### Use helper methods defined in the class
 ```typescript
 
 class DashboardController {
@@ -105,6 +105,37 @@ class DashboardController {
     // This middleware will run AFTER the Logger!
     @route({ middleware: Authentication })
     async users(req, res) { ... }
+}
+
+export default buildController(DashboardController)
+```
+
+### Request/Response and other objects are also provided inside `this` context!
+```typescript
+class DashboardController {
+    static PATH = '/dashboard'
+
+    @get()
+    async users() {
+        let raw = this.query.myNum
+        let num = Number.parseInt(raw)
+
+        this.response.json({ result: num })
+
+        /** There are aliases provided for:
+         * 
+         * req --> this.request
+         * res --> this.response
+         * next --> this.next,
+         * 
+         * res.locals --> this.locals
+         * req.params --> this.params
+         * req.query --> this.query
+         * 
+         * These can be used in any number of 
+         * helper functions within the class!
+        */
+    }
 }
 
 export default buildController(DashboardController)
