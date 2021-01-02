@@ -26,9 +26,15 @@ export function route(options?: RouteOptions) {
              * This will also provide helper methods in the class access to this!
              */
             const ctx = {
-                request: req,
+                req,
+                res,
+                next,
+
+                /** @alias req */
+                request: req,    
+
+                /** @alias res */
                 response: res,
-                next: next,
 
                 locals: res.locals,
                 params: req.params,
@@ -38,7 +44,7 @@ export function route(options?: RouteOptions) {
                 ...ctxMethods
             }
 
-            originalMethod.bind(ctx).apply(this, [req, res, next])
+            originalMethod.apply(ctx, [req, res, next])
         }
         return descriptor;
     }
@@ -63,6 +69,13 @@ export const post = (options?: RouteOptions) => {
 */
 export const put = (options?: RouteOptions) => {
     return route({ ...options, type: 'put' });
+}
+
+/** Define method as a PUT route. Shorthand for `route({ type: 'delete' })`
+ * @alias route
+*/
+export const del = (options?: RouteOptions) => {
+    return route({ ...options, type: 'delete' });
 }
 
 /** Will respond to all HTTP methods. Shorthand for `route({ type: 'all' })`
