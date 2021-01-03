@@ -20,6 +20,7 @@ export type RouteOptions = {
     /** Override the name of this route. By default the function name is used.
      * @example ```@route({ name: 'list_all_users' })```
      * @example ```@route({ name: '/nested/list_all_users' })```
+     * @example ```@route({ name: '/user/:id' })```
      */
     name?: string,
 
