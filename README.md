@@ -17,7 +17,7 @@ Here's a basic example to get started. Note that `buildController(...)` returns 
 
 ```typescript
 import express from 'express';
-import { route, buildController, BaseController } from 'eec';
+import { route, get, post, buildController, BaseController } from 'eec';
 
 class DashboardController extends BaseController {
     static PATH = '/dashboard'
@@ -27,7 +27,7 @@ class DashboardController extends BaseController {
         this.response.status(200).send(`Welcome to the dashboard!`);
     }
 
-    @route()        // Responds to /dashboard/users
+    @get()        // Responds to /dashboard/users
     async users() {
         // Also req.params & req.query
         if(this.params.someParameter || this.query.anotherParameter) {
@@ -36,6 +36,16 @@ class DashboardController extends BaseController {
         }
 
         this.response.sendStatus(404)
+    }
+
+    @post(':id')    // Responds to /dashboard/updateUser/<user_id>
+    async updateUser() {
+        if(this.params.id === 'admin') {
+            this.response.sendStatus(403);
+        } 
+        else {
+            this.response.status(200).send('Success!');
+        }
     }
 }
 
